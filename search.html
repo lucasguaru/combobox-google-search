@@ -2,7 +2,7 @@
 <html lang="en" ng-app="demo">
 <head>
     <meta charset="utf-8">
-    <title>AngularJS ui-select</title>
+    <title>Pesquisar Links</title>
 
     <!--
       IE8 support, see AngularJS Internet Explorer Compatibility https://docs.angularjs.org/guide/ie
@@ -25,7 +25,7 @@
     <script src="js/select.js"></script>
     <link rel="stylesheet" href="css/select.css">
 
-    <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
 
     <!-- themes -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -64,17 +64,14 @@
 <body class="ng-cloak" ng-controller="UrlCtrl as ctrl">
 
 <div class="container">
-  <div style="margin-top: 100px">[Place your logo here!]</div>
   <div>
-    <h3>Urls:</h3>
-    <p>Selected: {{ctrl.person.selected}}</p>
-    <ui-select autofocus ng-model="ctrl.person.selected" theme="bootstrap" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Choose a person">
-      <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.name}}</ui-select-match>
-      <ui-select-choices repeat="person in ctrl.people | propsFilter: {name: $select.search, age: $select.search}">
-        <div ng-bind-html="person.name | highlight: $select.search"></div>
+    <h3>Pesquisar Links:</h3>
+    <ui-select autofocus ng-model="ctrl.link.selected" theme="bootstrap" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Pesquiser por um link">
+      <ui-select-match placeholder="Pesquise por um link">{{$select.selected.nome}}</ui-select-match>
+      <ui-select-choices repeat="link in ctrl.links | propsFilter: {nome: $select.search, url: $select.search}">
+        <div ng-bind-html="link.nome | highlight: $select.search"></div>
         <small>
-          email: {{person.email}}
-          age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+          link: {{link.url}}
         </small>
       </ui-select-choices>
     </ui-select>
