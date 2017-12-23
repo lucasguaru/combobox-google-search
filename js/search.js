@@ -8,14 +8,14 @@ var app = angular.module('demo', ['ngSanitize', 'ui.select']);
  * performs an AND between 'name: $select.search' and 'age: $select.search'.
  * We want to perform an OR.
  */
-app.filter('propsFilter', function() {
-  return function(items, props) {
+app.filter('propsFilter', function () {
+  return function (items, props) {
     var out = [];
 
     if (angular.isArray(items)) {
       var keys = Object.keys(props);
 
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         var itemMatches = false;
 
         for (var i = 0; i < keys.length; i++) {
@@ -57,24 +57,14 @@ app.filter('propsFilter', function() {
 app.controller('UrlCtrl', function ($scope, $http, $timeout, $interval) {
   var vm = this;
 
-  vm.disabled = undefined;
-  vm.searchEnabled = undefined;
-
-  vm.setInputFocus = function (){
+  vm.setInputFocus = function () {
     $scope.$broadcast('UiSelectDemo1');
   };
 
-  vm.counter = 0;
-  vm.onSelectCallback = function (item, model){
-    vm.counter++;
-    vm.eventResult = {item: item, model: model};
+  $scope.onSelectCallback = function (item, model) {
+    window.open($scope.ctrl.link.selected.url, '_blank').focus();
   };
 
-
-  vm.person = {};
-
-  vm.links = [
-    { nome: 'Kibana HK Log Técnico', url: "http://srvbdrivlbr04.santanderbr.pre.corp/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-4h,mode:quick,to:now))&_a=(columns:!(bean.envioModulo,bean.envioStep,bean.sistemaOrigemSigla),filters:!(),index:openbus_search_br,interval:auto,query:(query_string:(analyze_wildcard:!t,query:'tool:MSGLOGSMS')),sort:!(_score,desc))"}
-  ];
+  vm.links = links;
 
 });

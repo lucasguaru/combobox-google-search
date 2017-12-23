@@ -25,6 +25,7 @@
     <script src="js/select.js"></script>
     <link rel="stylesheet" href="css/select.css">
 
+    <script src="js/search_dados.js"></script>
     <script src="js/search.js"></script>
 
     <!-- themes -->
@@ -62,20 +63,35 @@
 </head>
 
 <body class="ng-cloak" ng-controller="UrlCtrl as ctrl">
-
-<div class="container">
-  <div>
-    <h3>Pesquisar Links:</h3>
-    <ui-select autofocus ng-model="ctrl.link.selected" theme="bootstrap" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Pesquiser por um link">
-      <ui-select-match placeholder="Pesquise por um link">{{$select.selected.nome}}</ui-select-match>
-      <ui-select-choices repeat="link in ctrl.links | propsFilter: {nome: $select.search, url: $select.search}">
-        <div ng-bind-html="link.nome | highlight: $select.search"></div>
-        <small>
-          link: {{link.url}}
-        </small>
-      </ui-select-choices>
-    </ui-select>
+  
+  <div class="container">
+    <div>
+      <h3>Pesquisar Links:</h3>
+      <ui-select autofocus ng-model="ctrl.link.selected" ng-change="onSelectCallback()" theme="bootstrap" style="min-width: 300px;" title="Pesquisar por um link">
+        <ui-select-match placeholder="Pesquise por um link">{{$select.selected.nome}}</ui-select-match>
+        <ui-select-choices repeat="link in ctrl.links | propsFilter: {nome: $select.search, url: $select.search}">
+          <div ng-bind-html="link.nome | highlight: link.nome"></div>
+          <small>
+            link: {{link.url}}
+          </small>
+        </ui-select-choices>
+      </ui-select>
+    </div>
   </div>
-</div>
-</body>
-</html>
+  </body>
+  <script>
+  
+    var mySearch = undefined;
+    
+    $(document).ready(function() {
+      $(document).keydown(function(event) {
+        if (event.keyCode == 32 && event.ctrlKey === true) {
+          if (!mySearch || mySearch.location.href === undefined) {
+            mySearch = window.open('search.html', '_blank');
+          }
+          var f = mySearch.focus();
+        }
+      });
+    });
+  </script>
+  </html>
